@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="逗葉MaSKeT">
+<meta name="theme-color" content="#1F3A5F">
+<title>逗葉MaSKeT</title>
+<link rel="apple-touch-icon" id="touchIcon" href="">
+<link rel="icon" id="favIcon" href="">
+<style>
+:root{--h:#B8860B;--hbg:#FFF4CC;--z:#1F5FA8;--zbg:#E1EDFA;--ink:#1d2433;--sub:#6b7280;--line:#e5e7eb;--bg:#f3f4f7;--red:#c62828}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN",sans-serif;background:var(--bg);color:var(--ink);font-size:15px;touch-action:manipulation;padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 14px 10px;display:flex;align-items:center;gap:8px}
+.ttl{display:flex;align-items:baseline;gap:3px;color:#1F3A5F;line-height:1}
+.ttl .zy{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:19px;font-weight:600;letter-spacing:2px}
+.ttl .eu{font-family:"Bodoni 72","Didot","Bodoni MT","Baskerville","Times New Roman",Georgia,serif;font-size:27px;font-weight:400;letter-spacing:1.5px}
+.ttl .eu i{font-style:italic}
+.ver{display:inline-block;font-size:10px;border:1px solid #9aa3b2;color:#6b7280;border-radius:10px;padding:1px 6px;margin-left:6px;vertical-align:middle;font-weight:600;font-family:-apple-system,sans-serif}
+.gear{margin-left:auto;border:none;background:#f1f2f5;border-radius:10px;width:40px;height:40px;font-size:20px}
+main{padding:12px;max-width:640px;margin:0 auto}
+.card{background:#fff;border-radius:14px;padding:12px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.card h2{font-size:15px;margin:0 0 10px;display:flex;align-items:center;gap:6px}
+.muted{color:var(--sub);font-size:12px}
+select,input[type=date],input[type=number],input[type=text]{font-size:16px;padding:8px 10px;border:1px solid #cfd4dc;border-radius:10px;background:#fff;color:var(--ink)}
+.btn{display:inline-block;border:none;border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;background:#1F3A5F;color:#fff;width:100%}
+.btn.sub{background:#eef0f4;color:var(--ink);font-weight:600}
+.btn.red{background:#fdecec;color:var(--red)}
+.btn.sm{width:auto;padding:8px 12px;font-size:14px}
+.row{display:flex;gap:8px;align-items:center}
+.row>*{flex:1}
+.sel-season{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.sel-season select{flex:1;font-weight:700}
+.sb{display:grid;gap:8px}
+.sbr{display:grid;grid-template-columns:54px 1fr 44px;align-items:center;gap:8px}
+.tag{font-size:12px;font-weight:700;border-radius:8px;padding:4px 0;text-align:center}
+.tag.H{background:var(--hbg);color:var(--h)}.tag.Z{background:var(--zbg);color:var(--z)}
+.bar{height:22px;background:#eef0f4;border-radius:11px;overflow:hidden;position:relative}
+.bar i{display:block;height:100%;border-radius:11px}
+.bar span{position:absolute;left:10px;top:2px;font-size:13px;font-weight:700}
+.sbr b{font-size:20px;text-align:right}
+.teamline{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;text-align:center}
+.teamline .t{font-weight:800;font-size:22px}
+.teamline .H{color:var(--h)}.teamline .Z{color:var(--z)}
+.lead{font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:4px}
+.seat{border-radius:12px;padding:8px;margin-bottom:8px}
+.seat.H{background:var(--hbg)}.seat.Z{background:var(--zbg)}
+.seat .top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.seat .top select{flex:1;font-weight:700;padding:6px 8px}
+.seat .pt{min-width:48px;text-align:right;font-weight:800;font-size:20px}
+.seat .bot{display:grid;grid-template-columns:repeat(4,1fr) 1.2fr 1.2fr;gap:6px}
+.rb,.tg{border:1.5px solid #cfd4dc;background:#fff;border-radius:10px;height:44px;font-size:17px;font-weight:800;color:#475063}
+.tg{font-size:13px}
+.rb.on{background:#1F3A5F;border-color:#1F3A5F;color:#fff}
+.rb.auto{background:#7d8aa3;border-color:#7d8aa3;color:#fff}
+.tg.on{background:var(--red);border-color:var(--red);color:#fff}
+.msg{color:var(--red);font-size:13px;margin:6px 0;min-height:1em}
+.hl{list-style:none;margin:0;padding:0}
+.hl li{display:flex;align-items:center;gap:8px;padding:9px 4px;border-bottom:1px solid var(--line)}
+.hl li:last-child{border-bottom:none}
+.hl .no{font-weight:800;color:var(--sub);width:30px}
+.hl .ds{font-size:11px;color:var(--sub);width:40px}
+.hl .ps{flex:1;display:flex;gap:4px;flex-wrap:wrap}
+.chip{font-size:13px;border-radius:7px;padding:2px 6px;font-weight:700}
+.chip.H{background:var(--hbg);color:var(--h)}.chip.Z{background:var(--zbg);color:var(--z)}
+.chip small{color:var(--red);font-weight:700}
+.hl li.ed{background:#fff8e1}
+.end{border:2px solid #1F3A5F}
+.rk{display:grid;grid-template-columns:40px 1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.rk .n{font-weight:900;font-size:18px;text-align:center}
+.rk.r1 .n{color:#d4a017}
+.dice{background:#fff8e1;border-radius:10px;padding:10px;margin:8px 0}
+.dice .bs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.dice button{border:1.5px solid #cfd4dc;background:#fff;border-radius:10px;padding:10px 14px;font-size:16px;font-weight:700}
+.dice button.pk{background:#1F3A5F;color:#fff;border-color:#1F3A5F}
+.res{font-size:18px;font-weight:800;text-align:center;margin:10px 0}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vs>div{border-radius:12px;padding:10px;text-align:center}
+.vs .H{background:var(--hbg);color:var(--h)}.vs .Z{background:var(--zbg);color:var(--z)}
+.vs .big{font-size:30px;font-weight:900;line-height:1.1}
+.vs .lb{font-size:12px;font-weight:700}
+.vs .sm{font-size:12px;color:var(--ink);margin-top:4px}
+.vs .win{outline:3px solid currentColor}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.st{border-collapse:collapse;font-size:13px;white-space:nowrap;min-width:100%}
+table.st th,table.st td{padding:7px 6px;text-align:right;border-bottom:1px solid var(--line)}
+table.st th{font-size:11px;color:var(--sub);font-weight:700;background:#fafbfc}
+table.st td:first-child,table.st th:first-child{position:sticky;left:0;background:#fff;text-align:left;font-weight:800;z-index:1}
+table.st th:first-child{background:#fafbfc}
+table.st tr.g td{color:#8b93a1;font-style:italic}
+table.st tr.g td:first-child{color:#8b93a1}
+table.st tr.sep td{background:#f6f7f9;color:var(--sub);font-size:11px;text-align:left;font-style:normal;position:static}
+.nH{color:var(--h)}.nZ{color:var(--z)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin-top:6px}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;vertical-align:middle;margin-right:4px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
+nav button{flex:1;border:none;background:none;padding:10px 0 8px;font-size:12px;color:var(--sub);font-weight:700}
+nav button .ic{display:block;font-size:22px;margin-bottom:2px}
+nav button.on{color:#1F3A5F}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1d2433;color:#fff;padding:10px 16px;border-radius:20px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50;white-space:nowrap}
+.toast.on{opacity:.95}
+.pl{display:grid;grid-template-columns:72px 1fr auto;gap:6px;align-items:center;margin-bottom:6px}
+.pl input{padding:6px 8px}
+.help{font-size:13px;line-height:1.7;color:#374151}
+.help ol{padding-left:20px;margin:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="ttl"><span class="zy">逗葉</span><span class="eu">M<i>a</i>SK<i>e</i>T</span><span class="ver">v1.3</span></div>
+  <button class="gear" onclick="go('set')" aria-label="設定">⚙</button>
+</header>
+<main id="app"></main>
+<nav>
+  <button id="t-in" onclick="go('in')"><span class="ic">🀄</span>入力</button>
+  <button id="t-st" onclick="go('st')"><span class="ic">📊</span>集計</button>
+</nav>
+<div class="toast" id="toast"></div>
+<input type="file" id="fileIn" accept=".csv,text/csv" style="display:none" onchange="onFile(this)">
+
+<script>
+'use strict';
+const KEY='zuyo_masket_v1';
+const SEATT=['H','H','Z','Z'];
+const SEATLBL=['葉山','葉山','逗子','逗子'];
+const SEATCODE=['葉1','葉2','逗1','逗2'];
+const COLORS=['#C99700','#E8B923','#1F5FA8','#6FA8DC'];
+const TEAMNM={H:'葉山',Z:'逗子'};
+
+function defState(){return{v:1,defaultTarget:60,curId:null,seasons:[],players:[
+ {id:'p1',name:'昌秋',team:'H',guest:false},
+ {id:'p2',name:'貞子',team:'H',guest:false},
+ {id:'p5',name:'健二',team:'Z',guest:false},
+ {id:'p6',name:'貴子',team:'Z',guest:false},
+ {id:'p3',name:'七海',team:'H',guest:true},
+ {id:'p4',name:'美海',team:'H',guest:true},
+ {id:'p7',name:'葵子',team:'Z',guest:true},
+ {id:'p8',name:'蒼太',team:'Z',guest:true}]}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.players&&s.seasons)return s}catch(e){}return defState()}
+let S=load();
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-5);
+const P=id=>S.players.find(p=>p.id===id)||{id,name:'?',team:'H',guest:true};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fmtD=d=>d?d.replace(/^(\d{4})-0?(\d+)-0?(\d+)$/,'$1/$2/$3'):'日付なし';
+const fmtDs=d=>d?d.replace(/^\d{4}-0?(\d+)-0?(\d+)$/,'$1/$2'):'—';
+const sgn=n=>n>0?'+'+n:String(n);
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),1800)}
+
+/* ===== 計算 ===== */
+function pts(h,i){return (4-h.rank[i])-(h.yaki[i]?1:0)-(h.dobon[i]?1:0)}
+const sorted=()=>[...S.seasons].sort((a,b)=>a.no-b.no);
+const seasonById=id=>S.seasons.find(s=>s.id===id);
+function calc(s){
+ const tot=[0,0,0,0],cum=[[0,0,0,0]];let reached=-1;
+ s.hanchans.forEach((h,k)=>{for(let i=0;i<4;i++)tot[i]+=pts(h,i);cum.push([...tot]);if(reached<0&&tot.some(t=>t>=s.target))reached=k});
+ const main=[0,1,2,3].map(i=>{const c={};let best=null,bn=-1;s.hanchans.forEach(h=>{c[h.seats[i]]=(c[h.seats[i]]||0)+1});for(const k in c)if(c[k]>bn){bn=c[k];best=k}return best});
+ const H=tot[0]+tot[1],Z=tot[2]+tot[3];
+ return{tot,cum,reached,finished:reached>=0,after:reached>=0?s.hanchans.length-1-reached:0,main,H,Z,team:H>Z?'H':Z>H?'Z':'D'};
+}
+function tieGroups(tot){const idx=[0,1,2,3].sort((a,b)=>tot[b]-tot[a]||a-b);const g=[];let cur=[idx[0]];for(let k=1;k<4;k++){if(tot[idx[k]]===tot[cur[0]])cur.push(idx[k]);else{g.push(cur);cur=[idx[k]]}}g.push(cur);return g}
+function finalOrder(s,c){c=c||calc(s);const g=tieGroups(c.tot);
+ if(g.every(x=>x.length===1))return g.map(x=>x[0]);
+ if(s.order&&s.order.length===4&&new Set(s.order).size===4){for(let k=1;k<4;k++)if(c.tot[s.order[k]]>c.tot[s.order[k-1]])return null;return s.order}
+ return null}
+function seatName(s,c,i){const id=c.main[i];return id?P(id).name:SEATLBL[i]}
+function seasonPeriod(s){const ds=s.hanchans.map(h=>h.date).filter(Boolean).sort();return ds.length?fmtD(ds[0])+(ds[0]!==ds[ds.length-1]?' 〜 '+fmtD(ds[ds.length-1]):''):'—'}
+
+/* ===== 画面制御 ===== */
+let VIEW='in',F=null,tiePick={},AG='all';
+function go(v){VIEW=v;render();window.scrollTo(0,0)}
+function render(){
+ document.getElementById('t-in').classList.toggle('on',VIEW==='in');
+ document.getElementById('t-st').classList.toggle('on',VIEW==='st');
+ document.getElementById('app').innerHTML=VIEW==='in'?vInput():VIEW==='st'?vStats():vSet();
+}
+const cur=()=>seasonById(S.curId);
+function defaultSeats(){const r=t=>S.players.filter(p=>p.team===t&&!p.guest).map(p=>p.id);const h=r('H'),z=r('Z');return[h[0],h[1],z[0],z[1]]}
+function newForm(s){const last=s&&s.hanchans.length?s.hanchans[s.hanchans.length-1]:null;
+ return{edit:null,date:(s&&s.past&&last&&last.date)?last.date:today(),seats:last?[...last.seats]:defaultSeats(),rank:[null,null,null,null],yaki:[false,false,false,false],dobon:[false,false,false,false],autoIdx:-1}}
+
+/* ===== 入力画面 ===== */
+function vInput(){
+ const ss=sorted();let s=cur();
+ if(!s&&ss.length){s=ss.find(x=>x.status==='open')||ss[ss.length-1];S.curId=s.id;save()}
+ if(!F||F.sid!==S.curId){F=newForm(s);F.sid=S.curId}
+ let h='';
+ if(ss.length){h+=`<div class="sel-season"><select onchange="pickSeason(this.value)">${ss.map(x=>`<option value="${x.id}" ${x.id===S.curId?'selected':''}>第${x.no}期（${x.target}点・${x.status==='done'?'終了':'進行中'}${x.past?'・過去入力':''}）</option>`).join('')}</select></div>`}
+ if(!s){return h+`<div class="card"><h2>はじめましょう</h2><p class="muted">まだシーズンがありません。最初のシーズンを開始してください。過去のシーズンは⚙設定から追加できます。</p><button class="btn" onclick="startSeason()">シーズンを開始</button></div>`}
+ const c=calc(s);
+ h+=`<div class="card"><h2>第${s.no}期 <span class="muted">終了点 ${s.target}点 ／ ${s.hanchans.length}半荘</span></h2><div class="sb">`;
+ for(let i=0;i<4;i++){const w=Math.max(0,Math.min(100,c.tot[i]/s.target*100));
+  h+=`<div class="sbr"><div class="tag ${SEATT[i]}">${SEATLBL[i]}</div><div class="bar"><i style="width:${w}%;background:${COLORS[i]}"></i><span>${esc(seatName(s,c,i))}</span></div><b>${c.tot[i]}</b></div>`}
+ const ld=c.team==='H'?'H':c.team==='Z'?'Z':'';
+ h+=`</div><div class="teamline"><div><div class="muted">葉山組</div><div class="t H">${c.H}${ld==='H'?'<span class="lead" style="background:var(--hbg)">リード</span>':''}</div></div><div class="muted">vs</div><div><div class="muted">逗子組</div><div class="t Z">${c.Z}${ld==='Z'?'<span class="lead" style="background:var(--zbg)">リード</span>':''}</div></div></div></div>`;
+ if(c.finished)h+=vEnd(s,c);
+ if(!c.finished||F.edit)h+=vForm(s);
+ h+=vList(s);
+ return h;
+}
+function pickSeason(id){S.curId=id;save();F=null;tiePick={};render()}
+function vForm(s){
+ let h=`<div class="card"><h2>${F.edit?'半荘を修正':'半荘を記録（第'+(s.hanchans.length+1)+'半荘）'}</h2>
+ <div class="row" style="margin-bottom:10px"><input type="date" value="${F.date}" onchange="F.date=this.value"></div>`;
+ for(let i=0;i<4;i++){const t=SEATT[i];
+  const opts=S.players.filter(p=>p.team===t).sort((a,b)=>a.guest-b.guest).map(p=>`<option value="${p.id}" ${p.id===F.seats[i]?'selected':''}>${esc(p.name)}${p.guest?'（ゲスト）':''}</option>`).join('');
+  let pv='';if(F.rank[i]){pv=sgn((4-F.rank[i])-(F.yaki[i]?1:0)-(F.dobon[i]?1:0))}
+  h+=`<div class="seat ${t}"><div class="top"><span class="tag ${t}" style="width:44px">${SEATLBL[i]}</span><select onchange="F.seats[${i}]=this.value">${opts}</select><span class="pt">${pv}</span></div><div class="bot">`;
+  for(let r=1;r<=4;r++)h+=`<button class="rb ${F.rank[i]===r?(F.autoIdx===i?'auto':'on'):''}" onclick="setRank(${i},${r})">${r}位</button>`;
+  h+=`<button class="tg ${F.yaki[i]?'on':''}" onclick="F.yaki[${i}]=!F.yaki[${i}];render()">焼鳥</button><button class="tg ${F.dobon[i]?'on':''}" onclick="F.dobon[${i}]=!F.dobon[${i}];render()">ドボン</button></div></div>`}
+ h+=`<div class="msg" id="fmsg"></div><button class="btn" onclick="saveH()">${F.edit?'修正を保存':'この半荘を記録'}</button>`;
+ if(F.edit)h+=`<div class="row" style="margin-top:8px"><button class="btn sub" onclick="F=null;render()">キャンセル</button><button class="btn red" onclick="delH()">この半荘を削除</button></div>`;
+ return h+`<p class="muted" style="margin:8px 0 0">1位3点・2位2点・3位1点・4位0点。焼鳥・ドボンは各−1点。3人の順位を選ぶと残り1人は自動で入ります。</p></div>`;
+}
+function setRank(i,r){
+ for(let j=0;j<4;j++)if(j!==i&&F.rank[j]===r)F.rank[j]=null;
+ F.rank[i]=r;if(F.autoIdx===i)F.autoIdx=-1;
+ if(F.autoIdx>=0&&F.rank.filter(x=>x).length<4){F.autoIdx=-1}
+ const set=F.rank.filter(x=>x);
+ if(set.length===3){const miss=[1,2,3,4].find(x=>!set.includes(x));const j=F.rank.findIndex(x=>!x);F.rank[j]=miss;F.autoIdx=j}
+ render();
+}
+function saveH(){
+ const s=cur();const m=document.getElementById('fmsg');
+ if(F.rank.some(x=>!x)||new Set(F.rank).size!==4){m.textContent='4人全員の順位を選んでください。';return}
+ if(new Set(F.seats).size!==4){m.textContent='同じ選手が2つの席に入っています。';return}
+ const c0=calc(s);
+ if(!F.edit&&c0.finished){m.textContent='このシーズンは終了点に達しています。';return}
+ const rec={id:F.edit||uid(),date:F.date,seats:[...F.seats],rank:[...F.rank],yaki:[...F.yaki],dobon:[...F.dobon]};
+ if(F.edit){const k=s.hanchans.findIndex(x=>x.id===F.edit);s.hanchans[k]=rec}else s.hanchans.push(rec);
+ const c=calc(s);if(!c.finished)s.status='open';
+ if(s.order&&!finalOrder(s,c)){s.order=null;s.dice=false}
+ save();const ed=F.edit;F=null;tiePick={};render();
+ toast(ed?'修正しました':(c.finished?'終了点に到達！':'記録しました'));
+ if(c.finished&&!ed)window.scrollTo({top:0,behavior:'smooth'});
+}
+function editH(id){const s=cur();const x=s.hanchans.find(h=>h.id===id);F={edit:id,sid:s.id,date:x.date,seats:[...x.seats],rank:[...x.rank],yaki:[...x.yaki],dobon:[...x.dobon],autoIdx:-1};render();window.scrollTo({top:0,behavior:'smooth'})}
+function delH(){if(!confirm('この半荘を削除しますか？'))return;const s=cur();s.hanchans=s.hanchans.filter(h=>h.id!==F.edit);const c=calc(s);if(!c.finished)s.status='open';if(s.order&&!finalOrder(s,c)){s.order=null;s.dice=false}save();F=null;render();toast('削除しました')}
+function vList(s){
+ if(!s.hanchans.length)return'';
+ let h=`<div class="card"><h2>このシーズンの記録 <span class="muted">タップで修正</span></h2><ul class="hl">`;
+ s.hanchans.map((x,k)=>[x,k]).reverse().forEach(([x,k])=>{
+  h+=`<li class="${F&&F.edit===x.id?'ed':''}" onclick="editH('${x.id}')"><span class="no">${k+1}</span><span class="ds">${fmtDs(x.date)}</span><span class="ps">`;
+  for(let i=0;i<4;i++){const p=P(x.seats[i]);h+=`<span class="chip ${SEATT[i]}">${esc(p.name)} ${sgn(pts(x,i))}${x.yaki[i]?'<small>焼</small>':''}${x.dobon[i]?'<small>ド</small>':''}</span>`}
+  h+=`</span></li>`});
+ return h+`</ul></div>`;
+}
+function vEnd(s,c){
+ const o=finalOrder(s,c);
+ let h=`<div class="card end"><h2>🏁 第${s.no}期 終了</h2>`;
+ if(c.after>0)h+=`<p class="msg">※終了点に達した後に${c.after}半荘が記録されています。確認してください。</p>`;
+ if(!o){
+  const g=tieGroups(c.tot).filter(x=>x.length>1);
+  h+=`<p style="margin:0 0 4px;font-weight:700">同点があります。さいころで順位を決めてください。</p>`;
+  g.forEach(gr=>{const key=gr.join('');const pk=tiePick[key]||[];
+   h+=`<div class="dice">🎲 <b>${c.tot[gr[0]]}点で同点</b>：勝った順にタップ<div class="bs">${gr.map(i=>{const n=pk.indexOf(i);return`<button class="${n>=0?'pk':''}" onclick="pickTie('${key}',${i})">${n>=0?(n+1)+'. ':''}${esc(seatName(s,c,i))}</button>`}).join('')}</div></div>`});
+  h+=`<button class="btn sub sm" onclick="tiePick={};render()">選び直す</button>`;
+ }else{
+  o.forEach((i,k)=>{h+=`<div class="rk r${k+1}"><span class="n">${k+1}位</span><span><span class="tag ${SEATT[i]}" style="padding:2px 6px;margin-right:6px">${SEATLBL[i]}</span><b>${esc(seatName(s,c,i))}</b></span><b>${c.tot[i]}点</b></div>`});
+  if(s.dice)h+=`<p class="muted">🎲 同点はさいころで決定 <a href="#" onclick="undoDice('${s.id}');return false">やり直す</a></p>`;
+ }
+ h+=`<div class="res">${c.team==='D'?'葉山 '+c.H+' − '+c.Z+' 逗子　引き分け':`<span class="n${c.team}">${TEAMNM[c.team]}組の勝利！</span><br><span class="muted">葉山 ${c.H} − ${c.Z} 逗子</span>`}</div>`;
+ if(s.status!=='done')h+=o?`<button class="btn" onclick="confirmSeason()">第${s.no}期の結果を確定</button>`:'';
+ else{h+=`<p class="muted" style="text-align:center">✅ 確定済み</p>`;
+  if(!S.seasons.some(x=>x.status==='open'&&!x.past))h+=`<button class="btn" onclick="startSeason()">第${Math.max(...S.seasons.map(x=>x.no))+1}期を開始</button>`}
+ return h+`</div>`;
+}
+function pickTie(key,i){const s=cur(),c=calc(s);const a=tiePick[key]||(tiePick[key]=[]);if(!a.includes(i))a.push(i);
+ const g=tieGroups(c.tot);
+ if(g.every(x=>x.length===1||(tiePick[x.join('')]||[]).length===x.length)){s.order=g.flatMap(x=>x.length===1?x:tiePick[x.join('')]);s.dice=true;tiePick={};save()}
+ render()}
+function undoDice(id){const s=seasonById(id);s.order=null;s.dice=false;tiePick={};save();render()}
+function confirmSeason(){const s=cur();s.status='done';save();render();toast(`第${s.no}期を確定しました`)}
+function startSeason(){
+ const nx=S.seasons.length?Math.max(...S.seasons.map(x=>x.no))+1:1;
+ const no=parseInt(prompt('開始するシーズン番号（第○期）',nx));if(!no)return;
+ if(S.seasons.some(x=>x.no===no)){alert('第'+no+'期は既にあります。');return}
+ const tg=parseInt(prompt('終了点',S.defaultTarget));if(!tg)return;
+ const s={id:uid(),no,target:tg,status:'open',hanchans:[],order:null,dice:false,past:false};
+ S.seasons.push(s);S.curId=s.id;save();F=null;VIEW='in';render();toast(`第${no}期スタート！`)}
+
+/* ===== 集計 ===== */
+function stats(list){
+ const ps={};const ini=id=>ps[id]||(ps[id]={n:0,pt:0,r:[0,0,0,0,0],y:0,d:0,sr:[0,0,0,0,0],sn:0});
+ let H=0,Z=0,hw=0,zw=0,dr=0,nh=0,ns=0;
+ list.forEach(s=>{const c=calc(s);H+=c.H;Z+=c.Z;nh+=s.hanchans.length;
+  s.hanchans.forEach(h=>{for(let i=0;i<4;i++){const p=ini(h.seats[i]);p.n++;p.pt+=pts(h,i);p.r[h.rank[i]]++;if(h.yaki[i])p.y++;if(h.dobon[i])p.d++}});
+  if(s.status==='done'&&c.finished){const o=finalOrder(s,c);if(o){ns++;o.forEach((seat,k)=>{const p=ini(c.main[seat]);p.sr[k+1]++;p.sn++});if(c.team==='H')hw++;else if(c.team==='Z')zw++;else dr++}}});
+ return{ps,H,Z,hw,zw,dr,nh,ns};
+}
+function vStats(){
+ const ss=sorted();
+ let h=`<div class="sel-season"><select onchange="AG=this.value;render()"><option value="all" ${AG==='all'?'selected':''}>通算（全シーズン）</option>${ss.map(x=>`<option value="${x.id}" ${AG===x.id?'selected':''}>第${x.no}期${x.status==='done'?'':'（進行中）'}</option>`).join('')}</select></div>`;
+ if(!ss.length)return h+`<div class="card muted">まだ記録がありません。</div>`;
+ const one=AG!=='all'?seasonById(AG):null;if(AG!=='all'&&!one){AG='all';return vStats()}
+ const list=one?[one]:ss;const T=stats(list);
+ if(!one){
+  h+=`<div class="card"><h2>チーム対抗（シーズン勝利数）</h2><div class="vs"><div class="H ${T.hw>T.zw?'win':''}"><div class="lb">葉山組</div><div class="big">${T.hw}<small style="font-size:14px">勝</small></div><div class="sm">半荘獲得 ${T.H}点</div></div><div class="Z ${T.zw>T.hw?'win':''}"><div class="lb">逗子組</div><div class="big">${T.zw}<small style="font-size:14px">勝</small></div><div class="sm">半荘獲得 ${T.Z}点</div></div></div><p class="muted" style="margin:8px 0 0">確定シーズン ${T.ns}期${T.dr?'（引き分け'+T.dr+'）':''} ／ 総半荘数 ${T.nh}</p></div>`;
+ }else{
+  const c=calc(one);const o=c.finished?finalOrder(one,c):null;
+  h+=`<div class="card"><h2>第${one.no}期 <span class="muted">${seasonPeriod(one)}／${one.hanchans.length}半荘／終了点${one.target}</span></h2><div class="vs"><div class="H ${c.team==='H'?'win':''}"><div class="lb">葉山組</div><div class="big">${c.H}</div></div><div class="Z ${c.team==='Z'?'win':''}"><div class="lb">逗子組</div><div class="big">${c.Z}</div></div></div>`;
+  if(o){h+=`<div style="margin-top:8px">`+o.map((i,k)=>`<div class="rk r${k+1}"><span class="n">${k+1}位</span><span><span class="tag ${SEATT[i]}" style="padding:2px 6px;margin-right:6px">${SEATLBL[i]}</span><b>${esc(seatName(one,c,i))}</b></span><b>${c.tot[i]}点</b></div>`).join('')+`</div>`+(one.dice?'<p class="muted">🎲 同点はさいころで決定</p>':'')}
+  else h+=`<p class="muted">${c.finished?'同点の順位が未確定です（入力画面で決めてください）':'進行中'}</p>`;
+  h+=`</div><div class="card"><h2>得点の推移</h2>${chart(one,c)}</div>`;
+ }
+ const row=(p,g)=>{const x=T.ps[p.id];if(!x)return g?'':`<tr><td class="n${p.team}">${esc(p.name)}</td>${'<td>—</td>'.repeat(one?10:12)}</tr>`;
+  const ar=x.n?((x.r[1]+2*x.r[2]+3*x.r[3]+4*x.r[4])/x.n).toFixed(2):'—';
+  const sar=x.sn?((x.sr[1]+2*x.sr[2]+3*x.sr[3]+4*x.sr[4])/x.sn).toFixed(2):'—';
+  return`<tr class="${g?'g':''}"><td class="n${p.team}">${esc(p.name)}</td>${one?'':`<td>${x.sr[1]}</td><td>${sar}</td>`}<td>${x.n}</td><td>${x.pt}</td><td>${x.n?(x.pt/x.n).toFixed(2):'—'}</td><td>${x.r[1]}</td><td>${x.r[2]}</td><td>${x.r[3]}</td><td>${x.r[4]}</td><td>${ar}</td><td>${x.y}</td><td>${x.d}</td></tr>`};
+ const reg=S.players.filter(p=>!p.guest).sort((a,b)=>a.team.localeCompare(b.team)),gs=S.players.filter(p=>p.guest&&T.ps[p.id]);
+ h+=`<div class="card"><h2>個人成績</h2><div class="tw"><table class="st"><tr><th>選手</th>${one?'':'<th>優勝</th><th>期平均順位</th>'}<th>半荘</th><th>獲得点</th><th>平均点</th><th>1位</th><th>2位</th><th>3位</th><th>4位</th><th>平均順位</th><th>焼鳥</th><th>ドボン</th></tr>${reg.map(p=>row(p,false)).join('')}${gs.length?`<tr class="sep"><td colspan="${one?11:13}">ゲスト（代打）</td></tr>`+gs.map(p=>row(p,true)).join(''):''}</table></div>${one?'':'<p class="muted" style="margin:8px 0 0">優勝・期平均順位は、その席で最も多く打った人に付けています。</p>'}</div>`;
+ if(!one){
+  h+=`<div class="card"><h2>シーズン一覧 <span class="muted">タップで詳細</span></h2><ul class="hl">`;
+  [...ss].reverse().forEach(s=>{const c=calc(s);const o=c.finished?finalOrder(s,c):null;
+   h+=`<li onclick="AG='${s.id}';render();window.scrollTo(0,0)"><span class="no" style="width:44px">${s.no}期</span><span class="ps" style="flex-direction:column;gap:2px"><span class="muted">${seasonPeriod(s)}・${s.hanchans.length}半荘</span><span>${s.status==='done'&&o?`<span class="chip ${c.team==='D'?'':c.team}">${c.team==='D'?'引分':TEAMNM[c.team]+'勝'}</span> 1位 <b>${esc(seatName(s,c,o[0]))}</b>`:'<span class="muted">進行中／未確定</span>'}</span></span><b>${c.H}−${c.Z}</b></li>`});
+  h+=`</ul></div>`;
+ }
+ return h;
+}
+function chart(s,c){
+ const W=340,Hh=210,pl=30,pr=10,pt=12,pb=24;const n=c.cum.length-1;
+ if(!n)return'<p class="muted">まだ半荘がありません。</p>';
+ const all=c.cum.flat();const maxY=Math.max(s.target,...all)+2,minY=Math.min(0,...all);
+ const x=k=>pl+(W-pl-pr)*k/n,y=v=>pt+(Hh-pt-pb)*(1-(v-minY)/(maxY-minY));
+ let g='';
+ [0,Math.round(s.target/2),s.target].forEach(v=>{g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="${v===s.target?'#c62828':'#e5e7eb'}" stroke-dasharray="${v===s.target?'5 4':''}"/><text x="${pl-4}" y="${y(v)+4}" font-size="10" text-anchor="end" fill="${v===s.target?'#c62828':'#6b7280'}">${v}</text>`});
+ const step=Math.max(1,Math.ceil(n/8));for(let k=0;k<=n;k+=step)g+=`<text x="${x(k)}" y="${Hh-6}" font-size="10" text-anchor="middle" fill="#6b7280">${k}</text>`;
+ for(let i=0;i<4;i++){g+=`<polyline fill="none" stroke="${COLORS[i]}" stroke-width="2.5" stroke-linejoin="round" points="${c.cum.map((v,k)=>x(k)+','+y(v[i])).join(' ')}"/>`}
+ return`<svg viewBox="0 0 ${W} ${Hh}" width="100%">${g}</svg><div class="legend">${[0,1,2,3].map(i=>`<span><i style="background:${COLORS[i]}"></i>${esc(seatName(s,c,i))}（${c.tot[i]}）</span>`).join('')}</div><p class="muted" style="margin:4px 0 0">横軸：半荘数　赤破線：終了点</p>`;
+}
+
+/* ===== 設定 ===== */
+function vSet(){
+ const s=cur();
+ let h=`<div class="card"><h2>⚙ ルール</h2><div class="row"><span>新しいシーズンの終了点</span><input type="number" inputmode="numeric" value="${S.defaultTarget}" style="max-width:90px" onchange="S.defaultTarget=parseInt(this.value)||60;save();toast('保存しました')"></div>`;
+ if(s)h+=`<div class="row" style="margin-top:8px"><span>第${s.no}期の終了点</span><input type="number" inputmode="numeric" value="${s.target}" style="max-width:90px" onchange="chgTarget(this.value)"></div><p class="muted">終了点はシーズンごとに記録されるため、変更しても他のシーズンには影響しません。</p>`;
+ h+=`</div><div class="card"><h2>📜 過去シーズンの入力</h2><p class="muted">紙の記録から入力するときに使います。日付はその都度指定できます。</p><button class="btn sub" onclick="addPast()">過去シーズンを追加</button>`;
+ if(s)h+=`<button class="btn red" style="margin-top:8px" onclick="delSeason()">第${s.no}期を削除</button>`;
+ h+=`</div><div class="card"><h2>👥 選手名簿</h2>`;
+ ['H','Z'].forEach(t=>{h+=`<p style="margin:6px 0;font-weight:800" class="n${t}">${TEAMNM[t]}組</p>`;
+  S.players.filter(p=>p.team===t).sort((a,b)=>a.guest-b.guest).forEach(p=>{h+=`<div class="pl"><span class="tag ${t}">${p.guest?'ゲスト':'レギュラー'}</span><input type="text" value="${esc(p.name)}" onchange="renameP('${p.id}',this.value)"><button class="btn sub sm" onclick="delPlayer('${p.id}')">✕</button></div>`});
+  h+=`<button class="btn sub sm" onclick="addGuest('${t}')">＋ ${TEAMNM[t]}組にゲスト追加</button>`});
+ h+=`</div>
+ <div class="card"><h2>💾 データ（Excel）</h2><p class="muted">データはこのiPhoneの中だけに保存されます。機種変更や万一に備えて、ときどき書き出してください。</p>
+ <button class="btn" onclick="exportCSV()">Excel用ファイル（CSV）を書き出す</button>
+ <button class="btn sub" style="margin-top:8px" onclick="document.getElementById('fileIn').click()">Excel用ファイル（CSV）を読み込む</button>
+ <button class="btn sub" style="margin-top:8px" onclick="exportTemplate()">入力用テンプレートを書き出す</button>
+ <button class="btn red" style="margin-top:8px" onclick="resetAll()">すべてのデータを消去</button></div>
+ <div class="card help"><h2>📱 ホーム画面に追加する</h2><ol><li>SafariでこのページのURLを開く</li><li>下部の共有ボタン（□↑）をタップ</li><li>「ホーム画面に追加」をタップ</li></ol></div>`;
+ return h;
+}
+function renameP(id,v){v=v.trim();if(!v)return render();P(id).name=v;save();toast('保存しました')}
+function chgTarget(v){const s=cur();const n=parseInt(v);if(!n)return;s.target=n;const c=calc(s);if(!c.finished&&s.status==='done')s.status='open';if(s.order&&!finalOrder(s,c)){s.order=null;s.dice=false}save();toast('第'+s.no+'期の終了点を'+n+'点にしました')}
+function addPast(){const no=parseInt(prompt('過去シーズンの番号（第○期）'));if(!no)return;if(S.seasons.some(x=>x.no===no)){alert('第'+no+'期は既にあります。');return}
+ const tg=parseInt(prompt('当時の終了点',60));if(!tg)return;const s={id:uid(),no,target:tg,status:'open',hanchans:[],order:null,dice:false,past:true};
+ S.seasons.push(s);S.curId=s.id;save();F=null;go('in');toast('第'+no+'期（過去）を入力できます')}
+function delSeason(){const s=cur();if(!confirm(`第${s.no}期（${s.hanchans.length}半荘）を削除します。元に戻せません。`))return;S.seasons=S.seasons.filter(x=>x.id!==s.id);S.curId=null;save();F=null;render();toast('削除しました')}
+function addGuest(t){const n=(prompt('ゲストの名前')||'').trim();if(!n)return;S.players.push({id:uid(),name:n,team:t,guest:true});save();render()}
+function delPlayer(id){if(S.seasons.some(s=>s.hanchans.some(h=>h.seats.includes(id)))){alert('記録がある選手は削除できません（名前の変更はできます）。');return}if(!confirm(P(id).name+'を削除しますか？'))return;S.players=S.players.filter(p=>p.id!==id);save();render()}
+function resetAll(){if(!confirm('すべての記録と設定を消去します。先に書き出しをおすすめします。消去しますか？'))return;if(!confirm('本当に消去しますか？'))return;S=defState();save();F=null;render();toast('消去しました')}
+
+/* ===== CSV 入出力 ===== */
+const HDR=['期','終了点','日付','半荘','葉山1','順位','焼鳥','ドボン','葉山2','順位','焼鳥','ドボン','逗子1','順位','焼鳥','ドボン','逗子2','順位','焼鳥','ドボン','同点決着'];
+function dl(name,text){const b=new Blob(['\uFEFF'+text],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+function exportCSV(){const L=[HDR.join(',')];
+ sorted().forEach(s=>s.hanchans.forEach((h,k)=>{const r=[s.no,s.target,h.date?fmtD(h.date):'',k+1];
+  for(let i=0;i<4;i++)r.push(P(h.seats[i]).name,h.rank[i],h.yaki[i]?1:'',h.dobon[i]?1:'');
+  r.push(k===0&&s.dice&&s.order?s.order.map(i=>SEATCODE[i]).join('>'):'');L.push(r.join(','))}));
+ const d=new Date();dl(`逗葉MaSKeT_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.csv`,L.join('\r\n'));toast('書き出しました')}
+function exportTemplate(){dl('逗葉MaSKeT_入力テンプレート.csv',HDR.join(',')+'\r\n');toast('テンプレートを書き出しました')}
+function onFile(inp){const f=inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{importCSV(rd.result)}catch(e){alert('読み込めませんでした：'+e.message)}inp.value=''};rd.readAsText(f,'utf-8')}
+function normDate(v){if(!v)return'';const m=String(v).match(/(\d{4})[\/\-.年](\d{1,2})[\/\-.月](\d{1,2})/);return m?`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`:''}
+function importCSV(text){
+ text=text.replace(/^\uFEFF/,'');
+ const rows=text.split(/\r?\n/).filter(l=>l.trim()).map(l=>l.split(/[,\t]/).map(x=>x.trim().replace(/^"|"$/g,'')));
+ const hd=rows.shift();if(!hd||hd[0]!=='期')throw new Error('1行目が「期」で始まる見出しになっていません。');
+ const by={},err=[],added=[];
+ const find=(nm,t)=>{let p=S.players.find(p=>p.name===nm)||S.players.find(p=>p.name[0]===nm&&nm.length===1);if(!p){p={id:uid(),name:nm,team:t,guest:true};S.players.push(p);added.push(nm)}return p.id};
+ rows.forEach((r,ln)=>{const no=parseInt(r[0]);if(!no)return;
+  const seats=[],rank=[],yaki=[],dobon=[];let bad=false;
+  for(let i=0;i<4;i++){const b=4+i*4;if(!r[b]){bad=true;break}seats.push(find(r[b],SEATT[i]));rank.push(parseInt(r[b+1]));yaki.push(r[b+2]==='1'||r[b+2]==='○');dobon.push(r[b+3]==='1'||r[b+3]==='○')}
+  if(bad||[...rank].sort().join('')!=='1234'){err.push(ln+2);return}
+  const o=by[no]||(by[no]={no,target:parseInt(r[1])||S.defaultTarget,h:[],tie:''});
+  o.h.push({id:uid(),date:normDate(r[2]),seats,rank,yaki,dobon,k:parseInt(r[3])||o.h.length+1});if(r[20])o.tie=r[20]});
+ const nos=Object.keys(by);if(!nos.length)throw new Error('取り込める行がありません。'+(err.length?'（エラー行：'+err.join(',')+'）':''));
+ const ow=nos.filter(n=>S.seasons.some(s=>s.no==n));
+ if(!confirm(`${nos.length}シーズン・${nos.reduce((a,n)=>a+by[n].h.length,0)}半荘を読み込みます。`+(ow.length?`\n第${ow.join('・')}期は上書きされます。`:'')+(err.length?`\n※${err.join(',')}行目は順位などに誤りがあるため読み飛ばします。`:'')+(added.length?`\n新しい選手（ゲスト）：${added.join('、')}`:'')))return;
+ nos.forEach(n=>{const o=by[n];o.h.sort((a,b)=>a.k-b.k);o.h.forEach(h=>delete h.k);
+  let s=S.seasons.find(x=>x.no==n);if(!s){s={id:uid(),no:o.no,past:true};S.seasons.push(s)}
+  Object.assign(s,{target:o.target,hanchans:o.h,order:null,dice:false});
+  if(o.tie){const od=o.tie.split('>').map(x=>SEATCODE.indexOf(x.trim()));if(od.length===4&&!od.includes(-1)){s.order=od;s.dice=true}}
+  const c=calc(s);if(s.order&&!finalOrder(s,c)){s.order=null;s.dice=false}
+  s.status=c.finished&&finalOrder(s,c)?'done':'open'});
+ save();F=null;render();toast('読み込みました');
+}
+
+/* ===== アイコン ===== */
+(function(){try{const cv=document.createElement('canvas');cv.width=cv.height=180;const x=cv.getContext('2d');
+ x.fillStyle='#1F3A5F';x.fillRect(0,0,180,180);
+ x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=1.5;x.strokeRect(12,12,156,156);x.strokeRect(17,17,146,146);
+ x.fillStyle='#fff';x.textAlign='center';x.textBaseline='middle';
+ x.font='600 34px "Hiragino Mincho ProN","Yu Mincho",serif';x.fillText('逗 葉',90,62);
+ x.fillRect(58,88,64,1.2);
+ const F='"Bodoni 72","Didot","Baskerville",Georgia,serif';const parts=[['M',0],['a',1],['SK',0],['e',1],['T',0]];
+ const fnt=it=>(it?'italic ':'')+'40px '+F;let w=0;parts.forEach(([t,it])=>{x.font=fnt(it);w+=x.measureText(t).width});
+ let px=90-w/2;x.textAlign='left';parts.forEach(([t,it])=>{x.font=fnt(it);x.fillText(t,px,122);px+=x.measureText(t).width});
+ const u=cv.toDataURL('image/png');document.getElementById('touchIcon').href=u;document.getElementById('favIcon').href=u}catch(e){}})();
+
+render();
+</script>
+</body>
+</html>
